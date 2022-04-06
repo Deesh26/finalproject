@@ -1,17 +1,12 @@
 
 package animationplayer;
 
-import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Ellipse2D;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -47,11 +42,13 @@ public class AnimationPlayer {
         String name = "";
         
         chooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+            @Override
             public boolean accept(File f) {
                 return f.getPath().toLowerCase().endsWith(".txt")
                         || f.isDirectory();
             }
 
+            @Override
             public String getDescription() {
                 return "Text File";
             }
@@ -67,9 +64,10 @@ public class AnimationPlayer {
         String line;
         String[] stringsEachLine = new String[]{};
         //Using set will remove duplicate words
-        List<String> stringsSet = new ArrayList<String>();
+        List<String> stringsSet = new ArrayList<>();
 
         //Read data from the file at particular path
+        try {
         BufferedReader reader = new BufferedReader(new FileReader(new File("C:\\Users\\Demo\\OneDrive\\Desktop\\ENGG-1420\\input.txt")));
 
         boolean isElement = false;
@@ -100,12 +98,12 @@ public class AnimationPlayer {
 
         elementsList = new ArrayList[numberOfElements];
         int j = 0;
-        elementsList[j] = new ArrayList<String>();
+        elementsList[j] = new ArrayList<>();
         for (int i = 0; i < stringsSet.size(); i++) {
 
             if (stringsSet.get(i).isEmpty()) {
                 j++;
-                elementsList[j] = new ArrayList<String>();
+                elementsList[j] = new ArrayList<>();
 
             } else {
 
@@ -114,6 +112,12 @@ public class AnimationPlayer {
         }
 
     }
+        catch(Exception druv){
+            System.out.println(druv);
+    }
+    
+    
+}
 // method to control the time for each animation of each element 
     public void MultipleFrames() {
 
@@ -126,6 +130,7 @@ public class AnimationPlayer {
 
     class SwingTimerActionListener implements ActionListener {
 
+        @Override
         public void actionPerformed(ActionEvent evnt) {
             JFrame frame = new JFrame("Frame " + Integer.toString(currentframe));
             JPanel panel = new JPanel();
@@ -378,19 +383,27 @@ public class AnimationPlayer {
     }
 
  //main method
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         AnimationPlayer player = new AnimationPlayer();
 
         try {
 
             player.loadAnimationFromFile();
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(AnimationPlayer.class
                     .getName()).log(Level.SEVERE, null, ex);
+            try {
+
+            player.loadAnimationFromFile();
+
+        }
+        catch ( ArithmeticException a){
+            System.out.println(a);
         }
         player.MultipleFrames();
 
     }
 
+}
 }

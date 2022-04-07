@@ -114,6 +114,7 @@ public class AnimationPlayer {
     }
         catch(Exception druv){
             System.out.println(druv);
+               System.out.println("It is an exception");
     }
     
     
@@ -128,7 +129,7 @@ public class AnimationPlayer {
         timer.start();
     }
 
-    class SwingTimerActionListener implements ActionListener {
+    class Swing_Timer_Action_Listener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent evnt) {
@@ -400,6 +401,7 @@ public class AnimationPlayer {
         }
         catch ( ArithmeticException a){
             System.out.println(a);
+             System.out.println("It is an exception");
         }
         player.MultipleFrames();
 
